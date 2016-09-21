@@ -1,17 +1,43 @@
 package inicial;
 import java_cup.runtime.*;
+import java.util.ArrayList;
 %%
-%{
-/* funciones y variables */
-private void imprimir(String descripcion, String lexema) {
-System.out.println(lexema + " -> " + descripcion);
-}
+
+%init{ /* Inicializador de clase (constructor) */
+	this.lista = new ArrayList();
+	this.enteros = 0;
+	this.reales = 0;
+	this.ids = 0;
+%init}
+
+%{/* funciones y variables */
+	public ArrayList lista;
+	public int enteros;
+	public int reales;
+	public int ids;
+	private void imprimir(String descripcion, String lexema, int v) {
+		System.out.println(lexema + " -> " + descripcion);
+		if(v==1){
+			this.ids++;
+		}
+		if(v==2){
+			this.enteros++;
+		}
+		if(v==3){
+			this.reales++;
+		}
+		lista.add(lexema + " -> " + descripcion);
+	}
 %}
+
 /* Información sobre la clase generada */
+
 %public
 %class AnalizadorLexico
 %type void
+
 /* Ajustes regulares */
+
 BLANCO = [\n| |\t]
 ID = [_|a-z|A-Z][a-z|A-Z|0-9|_]*
 ENTERO = 0|[1-9][0-9]*
@@ -21,11 +47,11 @@ OPERADORES_RELACIONALES = ("<" | ">" | "==" | "!="| ">=" | "<=" | "<<" | ">>")
 OPERADORES_LOGICOS = ("&&" | "||" | "!" | "&" | "|")
 SEPARADORES = ("(" | ")" | "{" | "}" | "[" | "]" | ";" | "," | "\"")
 %%
-{BLANCO} { imprimir("B/S", yytext()); }
-{ID} { imprimir("ID", yytext()); }
-{ENTERO} { imprimir("NUM_ENT", yytext()); }
-{PUNTO_FLOTANTE} { imprimir("NUM_REAL", yytext()); }
-{OPERADORES_MATEMATICOS} { imprimir("OP_MAT", yytext()); }
-{OPERADORES_RELACIONALES} { imprimir("OP_REL", yytext()); }
-{OPERADORES_LOGICOS} { imprimir("OP_LOG", yytext()); }
-{SEPARADORES} { imprimir("SEPARADOR", yytext()); }
+{BLANCO} { imprimir("B/S", yytext(),0); }
+{ID} { imprimir("ID", yytext(), 1); }
+{ENTERO} { imprimir("NUM_ENT", yytext(), 2); }
+{PUNTO_FLOTANTE} { imprimir("NUM_REAL", yytext(),3); }
+{OPERADORES_MATEMATICOS} { imprimir("OP_MAT", yytext(),0); }
+{OPERADORES_RELACIONALES} { imprimir("OP_REL", yytext(),0); }
+{OPERADORES_LOGICOS} { imprimir("OP_LOG", yytext(),0); }
+{SEPARADORES} { imprimir("SEPARADOR", yytext(),0); }
