@@ -232,7 +232,8 @@ public class AnalizadorLexico {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
-	public ArrayList lista;
+	public ArrayList listaT;
+	public ArrayList listaD;
 	public int enteros;
 	public int reales;
 	public int ids;
@@ -247,7 +248,8 @@ public class AnalizadorLexico {
 		if(v==3){
 			this.reales++;
 		}
-		lista.add(lexema + " -> " + descripcion);
+		listaT.add(lexema);
+		listaD.add(descripcion);
 	}
 
 
@@ -257,7 +259,8 @@ public class AnalizadorLexico {
    * @param   in  the java.io.Reader to read input from.
    */
   public AnalizadorLexico(java.io.Reader in) {
-  	this.lista = new ArrayList();
+  	this.listaT = new ArrayList();
+	this.listaD = new ArrayList();
 	this.enteros = 0;
 	this.reales = 0;
 	this.ids = 0;

@@ -4,14 +4,16 @@ import java.util.ArrayList;
 %%
 
 %init{ /* Inicializador de clase (constructor) */
-	this.lista = new ArrayList();
+	this.listaT = new ArrayList();
+	this.listaD = new ArrayList();
 	this.enteros = 0;
 	this.reales = 0;
 	this.ids = 0;
 %init}
 
 %{/* funciones y variables */
-	public ArrayList lista;
+	public ArrayList listaT;
+	public ArrayList listaD;
 	public int enteros;
 	public int reales;
 	public int ids;
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 		if(v==3){
 			this.reales++;
 		}
-		lista.add(lexema + " -> " + descripcion);
+		listaT.add(lexema);
+		listaD.add(descripcion);
 	}
 %}
 
